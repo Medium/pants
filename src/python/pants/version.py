@@ -6,4 +6,4 @@ from __future__ import (absolute_import, division, generators, nested_scopes, pr
                         unicode_literals, with_statement)
 
 
-VERSION = '0.0.59'
+VERSION = '0.0.59.c764b94695bea1d4476a919b096894f8f6c6b73d'
