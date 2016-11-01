@@ -27,7 +27,7 @@ class JarDependencyManagementIntegrationTest(PantsRunIntegrationTest):
 
   @contextmanager
   def _testing_build_file(self):
-    with self.file_renamed(self.project, 'TEST_BUILD', 'BUILD'):
+    with self.file_renamed(self.project, 'TEST_BUILD', 'PANTS.BUILD'):
       yield
 
   def _run_project(self, spec_name, default_target=None, conflict_strategy=None):

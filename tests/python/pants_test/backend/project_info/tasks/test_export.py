@@ -151,25 +151,25 @@ class ExportTest(InterpreterCacheTestMixin, ConsoleTaskTestBase):
         target_type=JvmTarget,
       )
 
-      self.add_to_build_file('src/python/x/BUILD', '''
+      self.add_to_build_file('src/python/x/PANTS.BUILD', '''
          python_library(name="x", sources=globs("*.py"))
       '''.strip())
 
-      self.add_to_build_file('src/python/y/BUILD', dedent('''
+      self.add_to_build_file('src/python/y/PANTS.BUILD', dedent('''
         python_library(name="y", sources=rglobs("*.py"))
         python_library(name="y2", sources=rglobs("subdir/*.py"))
         python_library(name="y3", sources=rglobs("Test*.py"))
       '''))
 
-      self.add_to_build_file('src/python/z/BUILD', '''
+      self.add_to_build_file('src/python/z/PANTS.BUILD', '''
         python_library(name="z", sources=zglobs("**/*.py"))
       '''.strip())
 
-      self.add_to_build_file('src/python/exclude/BUILD', '''
+      self.add_to_build_file('src/python/exclude/PANTS.BUILD', '''
         python_library(name="exclude", sources=globs("*.py", exclude=[['foo.py']]))
       '''.strip())
 
-      self.add_to_build_file('src/BUILD', '''
+      self.add_to_build_file('src/PANTS.BUILD', '''
         target(name="alias")
       '''.strip())
 
@@ -391,8 +391,8 @@ class ExportTest(InterpreterCacheTestMixin, ConsoleTaskTestBase):
 
   def test_synthetic_target(self):
     # Create a BUILD file then add itself as resources
-    self.add_to_build_file('src/python/alpha/BUILD', '''
-        python_library(name="alpha", sources=zglobs("**/*.py"), resources=["BUILD"])
+    self.add_to_build_file('src/python/alpha/PANTS.BUILD', '''
+        python_library(name="alpha", sources=zglobs("**/*.py"), resources=["PANTS.BUILD"])
       '''.strip())
 
     result = self.execute_export_json('src/python/alpha')

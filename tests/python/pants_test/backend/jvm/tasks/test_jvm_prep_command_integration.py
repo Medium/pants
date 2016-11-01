@@ -21,7 +21,7 @@ class JvmPrepCommandIntegration(PantsRunIntegrationTest):
 
   def assert_prep_compile(self):
     with open_zip('/tmp/running-in-goal-compile.jar') as jar:
-      self.assertEquals(sorted(['BUILD',
+      self.assertEquals(sorted(['PANTS.BUILD',
                                 'ExampleJvmPrepCommand.java',
                                 'META-INF/', 'META-INF/MANIFEST.MF']),
                         sorted(jar.namelist()))

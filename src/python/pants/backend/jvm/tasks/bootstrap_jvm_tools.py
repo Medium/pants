@@ -103,7 +103,7 @@ class BootstrapJvmTools(IvyTaskMixin, JarTask):
     msg = dedent("""
         Failed to resolve target for tool: {tool}. This target was obtained from
         option {option} in scope {scope}. You probably need to add this target to your tools
-        BUILD file(s), usually located in BUILD.tools in the workspace root.
+        PANTS.BUILD file(s), usually located in PANTS.BUILD.tools in the workspace root.
         Exception {etype}: {error}
       """.format(tool=dep_spec,
                  etype=type(error).__name__,

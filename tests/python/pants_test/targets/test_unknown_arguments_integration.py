@@ -19,7 +19,7 @@ class TestUnknownArgumentsIntegration(PantsRunIntegrationTest):
   def temp_target_spec(self, **kwargs):
     with temporary_dir('.') as tmpdir:
       spec = os.path.basename(tmpdir)
-      with open(os.path.join(tmpdir, 'BUILD'), 'w') as f:
+      with open(os.path.join(tmpdir, 'PANTS.BUILD'), 'w') as f:
         f.write(dedent('''
           java_library(name='{name}',
             {parameters}

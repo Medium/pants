@@ -11,10 +11,10 @@ $ ./pants binary src/java/org/pantsbuild/tools/junit:main
 so that the end result looks like (modulo the exact path to the binary jar you created in 1):
 
 $$ git diff
- diff --git a/BUILD.tools b/BUILD.tools
+ diff --git a/PANTS.BUILD.tools b/PANTS.BUILD.tools
  index fc53e75..da0a936 100644
- --- a/BUILD.tools
- +++ b/BUILD.tools
+ --- a/PANTS.BUILD.tools
+ +++ b/PANTS.BUILD.tools
  @@ -123,7 +123,8 @@ jar_library(name = 'junit',
               jars = [
                 jar(org = 'junit', name = 'junit-dep', rev = '4.10'),

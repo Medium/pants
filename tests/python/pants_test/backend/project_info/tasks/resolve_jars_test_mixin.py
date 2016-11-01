@@ -30,7 +30,7 @@ class ResolveJarsTestMixin(object):
       with self.temporary_sourcedir() as source_dir:
         with temporary_dir() as dist_dir:
           os.makedirs(os.path.join(source_dir, 'src'))
-          with open(os.path.join(source_dir, 'src', 'BUILD.one'), 'w+') as f:
+          with open(os.path.join(source_dir, 'src', 'PANTS.BUILD.one'), 'w+') as f:
             f.write(dedent("""
               jvm_binary(name='synthetic',
                 source='Main.java',
@@ -61,7 +61,7 @@ class ResolveJarsTestMixin(object):
           self.assertTrue(os.path.exists(jar_path), 'Synthetic binary was not created!')
           jar_url = 'file://{}'.format(os.path.abspath(jar_path))
 
-          with open(os.path.join(source_dir, 'src', 'BUILD.two'), 'w+') as f:
+          with open(os.path.join(source_dir, 'src', 'PANTS.BUILD.two'), 'w+') as f:
             f.write(dedent("""
               jar_library(name='lib_with_url',
                 jars=[

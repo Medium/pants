@@ -154,7 +154,7 @@ Pants has many tests. There are BUILD targets to run those tests. We try to keep
 origin on `github.com/pantsbuild/pants`.
 
 Most test are runnable as regular Pants test targets. To find tests that work with a particular
-feature, you might explore `tests/python/pants_tests/.../BUILD`.
+feature, you might explore `tests/python/pants_tests/.../PANTS.BUILD`.
 
 Before [[contributing a change to Pants|pants('src/docs:howto_contribute')]],
 make sure it passes **all** of our continuous integration (CI) tests: everything builds,
@@ -258,7 +258,7 @@ First, create a jar file for the tool with the `binary` goal.
     $ ./pants binary src/java/org/pantsbuild/tools/jar:main
 
 The above command will create `dist/jar-tool.jar` according to the _jvm_binary_
-target defined in `src/java/org/pantsbuild/tools/jar/BUILD`
+target defined in `src/java/org/pantsbuild/tools/jar/PANTS.BUILD`
 
 
 You'll need to update the jar dependency that this tool uses for Pants to see the

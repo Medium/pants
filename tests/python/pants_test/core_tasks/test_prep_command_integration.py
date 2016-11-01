@@ -24,7 +24,7 @@ class PrepCommandIntegrationTest(PantsRunIntegrationTest):
   @classmethod
   def _emit_targets(cls, workdir):
     prep_command_path = os.path.join(workdir, 'src/java/org/pantsbuild/prepcommand')
-    with safe_open(os.path.join(prep_command_path, 'BUILD'), 'w') as fp:
+    with safe_open(os.path.join(prep_command_path, 'PANTS.BUILD'), 'w') as fp:
       for name, touch_target in cls._SENTINELS.items():
         fp.write(dedent("""
           prep_command(

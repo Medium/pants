@@ -229,11 +229,11 @@ BUILD Files
 
 When we ran the `pants test` goal, we told pants what target to build, but where are these
 targets defined? Scattered around the source tree are `BUILD` files. These `BUILD` files
-define targets. For example, this code snippet of `java/org/pantsbuild/example/hello/main/BUILD`
+define targets. For example, this code snippet of `java/org/pantsbuild/example/hello/main/PANTS.BUILD`
 defines two targets: the app we ran and the binary that contains its code.
 These targets are named `main` (of type `jvm_app`) and and `main-bin` (of type `jvm_binary`):
 
-!inc[start-after=Like Hello World&end-before=README page](../../examples/src/java/org/pantsbuild/example/hello/main/BUILD)
+!inc[start-after=Like Hello World&end-before=README page](../../examples/src/java/org/pantsbuild/example/hello/main/PANTS.BUILD)
 
 Those `dependencies` statements are interesting.
 The `main-bin` build target depends on other build targets;
@@ -242,9 +242,9 @@ To build a runnable Java binary, we need to first compile its dependencies.
 The `main-bin` binary's dependency,
 `'examples/src/java/org/pantsbuild/example/hello/greet'`, is the *address* of
 another target. Addresses look, roughly, like `path/to/dir:targetname`. We can see this build
-target in the `.../hello/greet/BUILD` file:
+target in the `.../hello/greet/PANTS.BUILD` file:
 
-!inc[start-after=see LICENSE](../../examples/src/java/org/pantsbuild/example/hello/greet/BUILD)
+!inc[start-after=see LICENSE](../../examples/src/java/org/pantsbuild/example/hello/greet/PANTS.BUILD)
 
 Pants uses dependency information to figure out how to build your code.
 You might find it useful for other purposes, too. For example, if you

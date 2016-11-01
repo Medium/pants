@@ -171,7 +171,7 @@ class WhatChangedTestBasic(BaseWhatChangedTest):
       )
     """))
 
-    self.add_to_build_file('root/3rdparty/BUILD.twitter', dedent("""
+    self.add_to_build_file('root/3rdparty/PANTS.BUILD.twitter', dedent("""
       jar_library(
         name='dummy',
         jars=[
@@ -179,7 +179,7 @@ class WhatChangedTestBasic(BaseWhatChangedTest):
         ])
     """))
 
-    self.add_to_build_file('root/3rdparty/BUILD', dedent("""
+    self.add_to_build_file('root/3rdparty/PANTS.BUILD', dedent("""
       jar_library(
         name='dummy1',
         jars=[
@@ -191,14 +191,14 @@ class WhatChangedTestBasic(BaseWhatChangedTest):
     # It should not be treated as a BUILD file.
     self.create_dir('root/scripts/a/build')
 
-    self.add_to_build_file('root/scripts/BUILD', dedent("""
+    self.add_to_build_file('root/scripts/PANTS.BUILD', dedent("""
       java_library(
         name='scripts',
         sources=['a/build/scripts.java'],
       )
     """))
 
-    self.add_to_build_file('BUILD.config', dedent("""
+    self.add_to_build_file('PANTS.BUILD.config', dedent("""
       resources(
         name='pants-config',
         sources = globs('pants.ini*')
@@ -225,7 +225,7 @@ class WhatChangedTest(WhatChangedTestBasic):
     self.assert_console_output(
       'root/src/py/a:alpha',
       'root/src/py/a:beta',
-      workspace=self.workspace(files=['root/src/py/a/BUILD'])
+      workspace=self.workspace(files=['root/src/py/a/PANTS.BUILD'])
     )
 
   def test_broken_build_file(self):
@@ -233,7 +233,7 @@ class WhatChangedTest(WhatChangedTestBasic):
       self.add_to_build_file('root/src/py/a', dedent("""
         //
       """))
-      self.assert_console_output(workspace=self.workspace(files=['root/src/py/a/BUILD']))
+      self.assert_console_output(workspace=self.workspace(files=['root/src/py/a/PANTS.BUILD']))
 
   def test_resource_changed(self):
     self.assert_console_output(
@@ -250,7 +250,7 @@ class WhatChangedTest(WhatChangedTestBasic):
   def test_build_sibling(self):
     self.assert_console_output(
       'root/3rdparty:dummy',
-      workspace=self.workspace(files=['root/3rdparty/BUILD.twitter'])
+      workspace=self.workspace(files=['root/3rdparty/PANTS.BUILD.twitter'])
     )
 
   def test_resource_type_error(self):
@@ -365,7 +365,7 @@ class WhatChangedTest(WhatChangedTestBasic):
       'root/proto:unpacked_jars',
       'root/proto:external-source',
       'root/proto:external-source-jars',
-      workspace=self.workspace(files=['root/proto/BUILD'])
+      workspace=self.workspace(files=['root/proto/PANTS.BUILD'])
     )
 
   def test_deferred_sources_new(self):
@@ -393,7 +393,7 @@ class WhatChangedTest(WhatChangedTestBasic):
       'root/proto:unpacked_jars',
       'root/proto:external-source',
       'root/proto:external-source-jars',
-      workspace=self.workspace(files=['root/proto/BUILD'])
+      workspace=self.workspace(files=['root/proto/PANTS.BUILD'])
     )
 
   def test_globs_in_resources(self):

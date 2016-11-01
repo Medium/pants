@@ -36,7 +36,7 @@ class IvyImportsTest(NailgunTaskTestBase):
       yield jar_name
 
   def _make_jar_library(self, coordinate, jar_filename):
-    build_path = os.path.join(self.build_root, 'unpack', 'jars', 'BUILD')
+    build_path = os.path.join(self.build_root, 'unpack', 'jars', 'PANTS.BUILD')
     if os.path.exists(build_path):
       os.remove(build_path)
     return self.make_target(spec='unpack/jars:foo-jars',

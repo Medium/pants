@@ -30,7 +30,7 @@ class JavaProtobufLibraryTest(BaseTest):
       )
 
   def test_empty(self):
-    self.add_to_build_file('BUILD', dedent('''
+    self.add_to_build_file('PANTS.BUILD', dedent('''
     java_protobuf_library(name='foo',
       sources=[],
     )'''))
@@ -41,7 +41,7 @@ class JavaProtobufLibraryTest(BaseTest):
     self.assertSequenceEqual([], traversable_specs)
 
   def test_jar_library_imports(self):
-    self.add_to_build_file('BUILD', dedent('''
+    self.add_to_build_file('PANTS.BUILD', dedent('''
     java_protobuf_library(name='foo',
       sources=[],
       imports=[':import_jars',]
@@ -59,7 +59,7 @@ class JavaProtobufLibraryTest(BaseTest):
     self.assertIsInstance(import_jar_dep, JarDependency)
 
   def test_wrong_import_type1(self):
-    self.add_to_build_file('BUILD', dedent('''
+    self.add_to_build_file('PANTS.BUILD', dedent('''
       java_protobuf_library(name='foo',
         sources=[],
         imports=[':not_jar']
@@ -75,7 +75,7 @@ class JavaProtobufLibraryTest(BaseTest):
       target.imported_jars
 
   def test_wrong_import_type2(self):
-    self.add_to_build_file('BUILD', dedent('''
+    self.add_to_build_file('PANTS.BUILD', dedent('''
       java_protobuf_library(name='foo',
         sources=[],
         imports=[
@@ -89,7 +89,7 @@ class JavaProtobufLibraryTest(BaseTest):
       target.imported_jars
 
   def test_traversable_specs(self):
-    self.add_to_build_file('BUILD', dedent('''
+    self.add_to_build_file('PANTS.BUILD', dedent('''
     java_protobuf_library(name='foo',
       sources=[],
       imports=[':import_jars',],

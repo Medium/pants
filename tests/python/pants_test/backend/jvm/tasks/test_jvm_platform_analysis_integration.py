@@ -28,7 +28,7 @@ class JvmPlatformAnalysisIntegrationTest(PantsRunIntegrationTest):
 
     @property
     def build_file_path(self):
-      return os.path.join(self.javadir, 'BUILD')
+      return os.path.join(self.javadir, 'PANTS.BUILD')
 
     def write_build_file(self, contents):
       with open(self.build_file_path, 'w') as f:

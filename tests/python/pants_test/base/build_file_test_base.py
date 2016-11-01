@@ -46,31 +46,31 @@ class BuildFileTestBase(unittest.TestCase):
     self._project_tree = None
 
     # Seed a BUILD outside the build root that should not be detected
-    touch(os.path.join(self.base_dir, 'BUILD'))
+    touch(os.path.join(self.base_dir, 'PANTS.BUILD'))
 
     self.root_dir = os.path.join(self.base_dir, 'root')
 
-    self.touch('grandparent/parent/BUILD')
-    self.touch('grandparent/parent/BUILD.twitter')
+    self.touch('grandparent/parent/PANTS.BUILD')
+    self.touch('grandparent/parent/PANTS.BUILD.twitter')
     # Tricky!  This is a directory
-    self.makedirs('grandparent/parent/BUILD.dir')
-    self.makedirs('grandparent/BUILD')
-    self.touch('BUILD')
-    self.touch('BUILD.twitter')
-    self.touch('grandparent/parent/child1/BUILD')
-    self.touch('grandparent/parent/child1/BUILD.twitter')
-    self.touch('grandparent/parent/child2/child3/BUILD')
-    self.makedirs('grandparent/parent/child2/BUILD')
+    self.makedirs('grandparent/parent/PANTS.BUILD.dir')
+    self.makedirs('grandparent/PANTS.BUILD')
+    self.touch('PANTS.BUILD')
+    self.touch('PANTS.BUILD.twitter')
+    self.touch('grandparent/parent/child1/PANTS.BUILD')
+    self.touch('grandparent/parent/child1/PANTS.BUILD.twitter')
+    self.touch('grandparent/parent/child2/child3/PANTS.BUILD')
+    self.makedirs('grandparent/parent/child2/PANTS.BUILD')
     self.makedirs('grandparent/parent/child4')
-    self.touch('grandparent/parent/child5/BUILD')
+    self.touch('grandparent/parent/child5/PANTS.BUILD')
     self.makedirs('path-that-does-exist')
-    self.touch('path-that-does-exist/BUILD.invalid.suffix')
+    self.touch('path-that-does-exist/PANTS.BUILD.invalid.suffix')
 
     # This exercises https://github.com/pantsbuild/pants/issues/1742
     # Prior to that fix, BUILD directories were handled, but not if there was a valid BUILD file
     # sibling.
-    self.makedirs('issue_1742/BUILD')
-    self.touch('issue_1742/BUILD.sibling')
+    self.makedirs('issue_1742/PANTS.BUILD')
+    self.touch('issue_1742/PANTS.BUILD.sibling')
 
   def tearDown(self):
     shutil.rmtree(self.base_dir)

@@ -112,7 +112,7 @@ class BuildFileManipulatorTest(BaseTest):
       """
     )
 
-    build_file = self.add_to_build_file('BUILD', bad_targets)
+    build_file = self.add_to_build_file('PANTS.BUILD', bad_targets)
 
     bad_target_names = [
       'name_on_line',
@@ -151,7 +151,7 @@ class BuildFileManipulatorTest(BaseTest):
       """
     )
 
-    build_file = self.add_to_build_file('BUILD', simple_targets)
+    build_file = self.add_to_build_file('PANTS.BUILD', simple_targets)
 
     for no_deps_name in ['no_deps', 'empty_deps', 'empty_deps_inline']:
       no_deps = BuildFileManipulator.load(build_file, no_deps_name, {'target_type'})
@@ -202,7 +202,7 @@ class BuildFileManipulatorTest(BaseTest):
       )"""
     )
 
-    build_file = self.add_to_build_file('BUILD', self.complicated_dep_comments)
+    build_file = self.add_to_build_file('PANTS.BUILD', self.complicated_dep_comments)
 
     complicated_bfm = BuildFileManipulator.load(build_file, 'no_bg_no_cry', set(['target_type']))
     target_str = '\n'.join(complicated_bfm.target_lines())
@@ -229,7 +229,7 @@ class BuildFileManipulatorTest(BaseTest):
       )"""
     )
 
-    build_file = self.add_to_build_file('BUILD', self.complicated_dep_comments)
+    build_file = self.add_to_build_file('PANTS.BUILD', self.complicated_dep_comments)
 
     complicated_bfm = BuildFileManipulator.load(build_file, 'no_bg_no_cry', set(['target_type']))
     complicated_bfm.clear_unforced_dependencies()
@@ -265,7 +265,7 @@ class BuildFileManipulatorTest(BaseTest):
       # Also this one though it's weird"""
     )
 
-    build_file = self.add_to_build_file('BUILD', self.multi_target_build_string)
+    build_file = self.add_to_build_file('PANTS.BUILD', self.multi_target_build_string)
 
     multi_targ_bfm = BuildFileManipulator.load(build_file, 'target_bottom', {'target_type'})
     multi_targ_bfm.add_dependency(Address.parse(':new_dep'))
@@ -299,7 +299,7 @@ class BuildFileManipulatorTest(BaseTest):
       # Also this one though it's weird"""
     )
 
-    build_file = self.add_to_build_file('BUILD', self.multi_target_build_string)
+    build_file = self.add_to_build_file('PANTS.BUILD', self.multi_target_build_string)
 
     multi_targ_bfm = BuildFileManipulator.load(build_file, 'target_top', {'target_type'})
     multi_targ_bfm.add_dependency(Address.parse(':new_dep'))
@@ -333,7 +333,7 @@ class BuildFileManipulatorTest(BaseTest):
       # Also this one though it's weird"""
     )
 
-    build_file = self.add_to_build_file('BUILD', self.multi_target_build_string)
+    build_file = self.add_to_build_file('PANTS.BUILD', self.multi_target_build_string)
 
     multi_targ_bfm = BuildFileManipulator.load(build_file, 'target_middle', {'target_type'})
     multi_targ_bfm.add_dependency(Address.parse(':new_dep'))
@@ -368,7 +368,7 @@ class BuildFileManipulatorTest(BaseTest):
       """
     )
 
-    build_file = self.add_to_build_file('BUILD', self.multi_target_build_string + '\n')
+    build_file = self.add_to_build_file('PANTS.BUILD', self.multi_target_build_string + '\n')
 
     multi_targ_bfm = BuildFileManipulator.load(build_file, 'target_middle', {'target_type'})
     multi_targ_bfm.add_dependency(Address.parse(':new_dep'))

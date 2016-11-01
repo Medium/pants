@@ -79,13 +79,13 @@ class LinkifyTest(unittest.TestCase):
     self._do_test_not_linkified(url)
 
   def test_linkify_target(self):
-    ensure_file_exists(os.path.join(self._buildroot, 'foo/bar/BUILD'))
-    self._do_test_linkify('/browse/foo/bar/BUILD', 'foo/bar')
-    self._do_test_linkify('/browse/foo/bar/BUILD', 'foo/bar:target')
+    ensure_file_exists(os.path.join(self._buildroot, 'foo/bar/PANTS.BUILD'))
+    self._do_test_linkify('/browse/foo/bar/PANTS.BUILD', 'foo/bar')
+    self._do_test_linkify('/browse/foo/bar/PANTS.BUILD', 'foo/bar:target')
 
   def test_linkify_suffix(self):
-    ensure_file_exists(os.path.join(self._buildroot, 'foo/bar/BUILD.suffix'))
-    self._do_test_linkify('/browse/foo/bar/BUILD.suffix', 'foo/bar')
+    ensure_file_exists(os.path.join(self._buildroot, 'foo/bar/PANTS.BUILD.suffix'))
+    self._do_test_linkify('/browse/foo/bar/PANTS.BUILD.suffix', 'foo/bar')
 
   def test_linkify_stores_values_in_memo(self):
     url = 'https://foobar.com/baz/qux'

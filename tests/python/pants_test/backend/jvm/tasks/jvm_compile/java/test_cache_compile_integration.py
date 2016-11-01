@@ -42,7 +42,7 @@ class CacheCompileIntegrationTest(BaseCompileIT):
       }
 
       srcfile = os.path.join(src_dir, 'org', 'pantsbuild', 'cachetest', 'A.java')
-      buildfile = os.path.join(src_dir, 'org', 'pantsbuild', 'cachetest', 'BUILD')
+      buildfile = os.path.join(src_dir, 'org', 'pantsbuild', 'cachetest', 'PANTS.BUILD')
 
       self.create_file(srcfile,
                        dedent("""package org.pantsbuild.cachetest;
@@ -131,7 +131,7 @@ class CacheCompileIntegrationTest(BaseCompileIT):
         cache_settings = {'write_to': [cache_dir], 'read_from': [cache_dir]}
         return dict(config.items() + [('cache.compile.zinc', cache_settings)])
 
-      buildfile = os.path.join(src_dir, 'BUILD')
+      buildfile = os.path.join(src_dir, 'PANTS.BUILD')
       spec = os.path.join(src_dir, ':cachetest')
       artifact_dir = os.path.join(cache_dir,
                                   ZincCompile.stable_name(),

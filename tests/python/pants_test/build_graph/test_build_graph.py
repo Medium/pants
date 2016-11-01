@@ -35,7 +35,7 @@ class BuildGraphTest(BaseTest):
         # The target is located in the root.
         src_path = '.'
       self.add_to_build_file(
-          '{}/BUILD'.format(src_path),
+          '{}/PANTS.BUILD'.format(src_path),
           '''target(name='{}', dependencies=[{}])\n'''.format(
             src_name,
             "'{}'".format("','".join(targets)) if targets else ''
@@ -46,11 +46,11 @@ class BuildGraphTest(BaseTest):
     return root_address
 
   def test_target_invalid(self):
-    self.add_to_build_file('a/BUILD', 'target(name="a")')
+    self.add_to_build_file('a/PANTS.BUILD', 'target(name="a")')
     with self.assertRaises(AddressLookupError):
       self.build_graph.inject_address_closure(Address.parse('a:nope'))
 
-    self.add_to_build_file('b/BUILD', 'target(name="a")')
+    self.add_to_build_file('b/PANTS.BUILD', 'target(name="a")')
     with self.assertRaises(AddressLookupError):
       self.build_graph.inject_address_closure(Address.parse('b'))
     with self.assertRaises(AddressLookupError):
@@ -66,7 +66,7 @@ class BuildGraphTest(BaseTest):
     self.assertEqual(len(self.build_graph.transitive_subgraph_of_addresses([root_address])), 3)
 
   def test_no_targets(self):
-    self.add_to_build_file('empty/BUILD', 'pass')
+    self.add_to_build_file('empty/PANTS.BUILD', 'pass')
     with self.assertRaises(AddressLookupError):
       self.build_graph.inject_address_closure(Address.parse('empty'))
     with self.assertRaises(AddressLookupError):
@@ -250,7 +250,7 @@ class BuildGraphTest(BaseTest):
     with self.assertRaisesRegexp(AddressLookupError, '^.* does not contain any BUILD files.$'):
       self.inject_address_closure('//:a')
 
-    self.add_to_build_file('BUILD',
+    self.add_to_build_file('PANTS.BUILD',
                            'target(name="a", '
                            '  dependencies=["non-existent-path:b"],'
                            ')')
@@ -261,11 +261,11 @@ class BuildGraphTest(BaseTest):
       self.inject_address_closure('//:a')
 
   def test_invalid_address_two_hops(self):
-    self.add_to_build_file('BUILD',
+    self.add_to_build_file('PANTS.BUILD',
                            'target(name="a", '
                            '  dependencies=["goodpath:b"],'
                            ')')
-    self.add_to_build_file('goodpath/BUILD',
+    self.add_to_build_file('goodpath/PANTS.BUILD',
                            'target(name="b", '
                            '  dependencies=["non-existent-path:c"],'
                            ')')
@@ -288,11 +288,11 @@ class BuildGraphTest(BaseTest):
     self.inject_address_closure('//:synth_library_address')
 
   def test_invalid_address_two_hops_same_file(self):
-    self.add_to_build_file('BUILD',
+    self.add_to_build_file('PANTS.BUILD',
                            'target(name="a", '
                            '  dependencies=["goodpath:b"],'
                            ')')
-    self.add_to_build_file('goodpath/BUILD',
+    self.add_to_build_file('goodpath/PANTS.BUILD',
                            'target(name="b", '
                            '  dependencies=[":c"],'
                            ')\n'
@@ -308,13 +308,13 @@ class BuildGraphTest(BaseTest):
       self.inject_address_closure('//:a')
 
   def test_raise_on_duplicate_dependencies(self):
-    self.add_to_build_file('BUILD',
+    self.add_to_build_file('PANTS.BUILD',
                            'target(name="a", '
                            '  dependencies=['
                            '    "other:b",'
                            '    "//other:b",'  # we should perform the test on normalized addresses
                            '])')
-    self.add_to_build_file('other/BUILD',
+    self.add_to_build_file('other/PANTS.BUILD',
                            'target(name="b")')
 
     with self.assertRaisesRegexp(

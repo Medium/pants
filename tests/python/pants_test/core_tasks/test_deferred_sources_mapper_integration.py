@@ -18,7 +18,7 @@ class DeferredSourcesMapperIntegration(PantsRunIntegrationTest):
 
   @classmethod
   def _emit_targets(cls, workdir):
-    with safe_open(os.path.join(workdir, 'BUILD'), 'w') as f:
+    with safe_open(os.path.join(workdir, 'PANTS.BUILD'), 'w') as f:
       f.write(dedent("""
       remote_sources(name='proto-7',
         dest=java_protobuf_library,

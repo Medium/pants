@@ -71,7 +71,7 @@ __pants_autocomplete() {
       local path=${parts[0]}
 
       # If the path before the colon points at a valid BUILD file, query Pants for the targets.
-      if [ -r "${path}/BUILD" ]; then
+      if [ -r "${path}/PANTS.BUILD" ]; then
         local completions=`"$pants" list "${path}:" 2>/dev/null | cut -d: -f2`
         COMPREPLY=($(compgen -W "${completions}" -- "${parts[1]}" ))
       fi

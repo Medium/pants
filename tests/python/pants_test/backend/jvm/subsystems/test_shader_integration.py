@@ -105,13 +105,13 @@ class ShaderIntegrationTest(PantsRunIntegrationTest):
       tmp_name = os.path.basename(tmpdir)
       with open(os.path.join(tmpdir, 'Foo.java'), 'w+') as f:
         f.write('public class Foo {}\n')
-      with open(os.path.join(tmpdir, 'BUILD.lib'), 'w+') as f:
+      with open(os.path.join(tmpdir, 'PANTS.BUILD.lib'), 'w+') as f:
         f.write(dedent("""
           java_library(name='lib',
             sources=['Foo.java'],
           )
         """))
-      with open(os.path.join(tmpdir, 'BUILD'), 'w+') as f:
+      with open(os.path.join(tmpdir, 'PANTS.BUILD'), 'w+') as f:
         f.write(dedent("""
           jvm_binary(name='{name}',
             basename='{name}',
@@ -128,7 +128,7 @@ class ShaderIntegrationTest(PantsRunIntegrationTest):
       self.assert_success(self.run_pants(['binary', tmpdir]))
       permissions = os.stat(jar_path).st_mode
 
-      with open(os.path.join(tmpdir, 'BUILD'), 'w') as f:
+      with open(os.path.join(tmpdir, 'PANTS.BUILD'), 'w') as f:
         f.write(dedent("""
           jvm_binary(name='{name}',
             basename='{name}',

@@ -18,11 +18,11 @@ class TestPathDeps(ConsoleTaskTestBase):
 
   def test_filter_targets(self):
     self.add_to_build_file(
-        'BUILD',
+        'PANTS.BUILD',
          'target(name="a")'
     )
     self.add_to_build_file(
-        'second/BUILD',
+        'second/PANTS.BUILD',
          'target(name="b")'
     )
     a = self.target('//:a')

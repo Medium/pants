@@ -112,7 +112,7 @@ class JvmPlatformIntegrationMixin(object):
 
   def _test_compile(self, target_level, class_name, source_contents, platform_args=None):
     with temporary_dir(root_dir=os.path.abspath('.')) as tmpdir:
-      with open(os.path.join(tmpdir, 'BUILD'), 'w') as f:
+      with open(os.path.join(tmpdir, 'PANTS.BUILD'), 'w') as f:
         f.write(dedent('''
         java_library(name='{target_name}',
           sources=['{class_name}.java'],
@@ -172,7 +172,7 @@ class JvmPlatformIntegrationMixin(object):
   def test_compile_stale_platform_settings(self):
     # Tests that targets are properly re-compiled when their source/target levels change.
     with temporary_dir(root_dir=os.path.abspath('.')) as tmpdir:
-      with open(os.path.join(tmpdir, 'BUILD'), 'w') as f:
+      with open(os.path.join(tmpdir, 'PANTS.BUILD'), 'w') as f:
         f.write(dedent('''
         java_library(name='diamond',
           sources=['Diamond.java'],

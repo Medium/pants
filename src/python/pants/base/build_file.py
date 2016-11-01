@@ -32,7 +32,7 @@ class BuildFile(AbstractClass):
   class BadPathError(BuildFileError):
     """Raised when scan_buildfiles is called on a nonexistent directory."""
 
-  _BUILD_FILE_PREFIX = 'BUILD'
+  _BUILD_FILE_PREFIX = 'PANTS.BUILD'
   _PATTERN = re.compile('^{prefix}(\.[a-zA-Z0-9_-]+)?$'.format(prefix=_BUILD_FILE_PREFIX))
 
   _cache = {}

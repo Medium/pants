@@ -130,7 +130,7 @@ class ScopeChangesCacheInvalidationIntegrationTest(PantsRunIntegrationTest):
           return '{}:{}'.format(os.path.basename(tmp_project), name)
 
         def write_build(scope):
-          with open(os.path.join(tmp_project, 'BUILD'), 'w') as f:
+          with open(os.path.join(tmp_project, 'PANTS.BUILD'), 'w') as f:
             f.write(dedent('''
               java_library(name='foo',
                 sources=['Foo.java'],

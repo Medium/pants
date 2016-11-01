@@ -29,7 +29,7 @@ class TestExecutor(object):
 class TestFSEventService(BaseTest):
   BUILD_ROOT = '/build_root'
   EMPTY_EVENT = (None, None)
-  FAKE_EVENT = ('test', dict(subscription='test', files=['a/BUILD', 'b/BUILD']))
+  FAKE_EVENT = ('test', dict(subscription='test', files=['a/PANTS.BUILD', 'b/PANTS.BUILD']))
   FAKE_EVENT_STREAM = [FAKE_EVENT, EMPTY_EVENT, EMPTY_EVENT, FAKE_EVENT, EMPTY_EVENT]
   WORKER_COUNT = 1
 

@@ -28,14 +28,14 @@ class AliasTargetIntegrationTest(PantsRunIntegrationTest):
     self.assert_success(test_run)
 
   def test_alias_missing_target(self):
-    with self.file_renamed(self.test_module, 'TEST_NO_TARGET', 'BUILD.test'):
+    with self.file_renamed(self.test_module, 'TEST_NO_TARGET', 'PANTS.BUILD.test'):
       test_run = self.run_pants(['bootstrap', '{}::'.format(self.test_module)])
       self.assert_failure(test_run)
       self.assertIn('must have a "target"', test_run.stderr_data)
       self.assertIn('aliases:missing-target', test_run.stderr_data)
 
   def test_alias_missing_name(self):
-    with self.file_renamed(self.test_module, 'TEST_NO_NAME', 'BUILD.test'):
+    with self.file_renamed(self.test_module, 'TEST_NO_NAME', 'PANTS.BUILD.test'):
       test_run = self.run_pants(['bootstrap', '{}::'.format(self.test_module)])
       self.assert_failure(test_run)
       self.assertIn('aliases:?', test_run.stderr_data)

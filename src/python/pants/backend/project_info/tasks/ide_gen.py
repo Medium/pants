@@ -648,13 +648,13 @@ class Project(object):
 
     # We need to figure out excludes, in doing so there are 2 cases we should not exclude:
     # 1.) targets depend on A only should lead to an exclude of B
-    # A/BUILD
-    # A/B/BUILD
+    # A/PANTS.BUILD
+    # A/B/PANTS.BUILD
     #
     # 2.) targets depend on A and C should not lead to an exclude of B (would wipe out C)
-    # A/BUILD
+    # A/PANTS.BUILD
     # A/B
-    # A/B/C/BUILD
+    # A/B/C/PANTS.BUILD
     #
     # 1 approach: build set of all paths and parent paths containing BUILDs our targets depend on -
     # these are unexcludable

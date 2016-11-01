@@ -20,7 +20,7 @@ class FilemapIntegrationTest(PantsRunIntegrationTest):
 
   def setUp(self):
     super(FilemapIntegrationTest, self).setUp()
-    project_tree = FileSystemProjectTree(os.path.abspath(self.PATH_PREFIX), ['BUILD', '.*'])
+    project_tree = FileSystemProjectTree(os.path.abspath(self.PATH_PREFIX), ['PANTS.BUILD', '.*'])
     scan_set = set()
     for root, dirs, files in project_tree.walk(''):
       scan_set.update({os.path.join(root, f) for f in files})
@@ -53,7 +53,7 @@ class FilemapIntegrationTest(PantsRunIntegrationTest):
     #self.assertIn('testprojects/src/python/sources/sources.txt', run.stdout_data)
 
   def test_exclude_invalid_string(self):
-    build_path = os.path.join(self.PATH_PREFIX, 'BUILD.invalid')
+    build_path = os.path.join(self.PATH_PREFIX, 'PANTS.BUILD.invalid')
     build_content = '''python_library(name='exclude_strings_disallowed',
                                       sources=rglobs('*.py', exclude='aa.py'))'''
 

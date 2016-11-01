@@ -28,7 +28,7 @@ class GoThriftGenIntegrationTest(PantsRunIntegrationTest):
               1: optional string quack,
             }
             """).strip())
-      with safe_open(os.path.join(srcdir, 'src/thrift/thrifttest/BUILD'), 'w') as fp:
+      with safe_open(os.path.join(srcdir, 'src/thrift/thrifttest/PANTS.BUILD'), 'w') as fp:
         fp.write(dedent("""
             go_thrift_library(
               name='fleem',
@@ -47,7 +47,7 @@ class GoThriftGenIntegrationTest(PantsRunIntegrationTest):
               return d.GetQuack()
             }
             """).strip())
-      with safe_open(os.path.join(srcdir, 'src/go/usethrift/BUILD'), 'w') as fp:
+      with safe_open(os.path.join(srcdir, 'src/go/usethrift/PANTS.BUILD'), 'w') as fp:
         fp.write(dedent("""
             go_library(
               dependencies=[
@@ -56,7 +56,7 @@ class GoThriftGenIntegrationTest(PantsRunIntegrationTest):
             )
             """.format(srcdir=os.path.relpath(srcdir, get_buildroot()))).strip())
 
-      with safe_open(os.path.join(srcdir, '3rdparty/go/github.com/apache/thrift/BUILD'), 'w') as fp:
+      with safe_open(os.path.join(srcdir, '3rdparty/go/github.com/apache/thrift/PANTS.BUILD'), 'w') as fp:
         fp.write("go_remote_library(rev='0.9.3', pkg='lib/go/thrift')")
 
       config = {

@@ -35,13 +35,13 @@ def parse_spec(spec, relative_to=None):
 
   Optionally, specs can be prefixed with '//' to denote an absolute spec path.  This is normally
   not significant except when a spec referring to a root level target is needed from deeper in
-  the tree.  For example, in ``path/to/buildfile/BUILD``::
+  the tree.  For example, in ``path/to/buildfile/PANTS.BUILD``::
 
     some_target(name='mytarget',
       dependencies=[':targetname']
     )
 
-  The ``targetname`` spec refers to a target defined in ``path/to/buildfile/BUILD*``.  If instead
+  The ``targetname`` spec refers to a target defined in ``path/to/buildfile/PANTS.BUILD*``.  If instead
   you want to reference ``targetname`` in a root level BUILD file, use the absolute form.
   For example::
 
@@ -62,7 +62,7 @@ def parse_spec(spec, relative_to=None):
     if components[0] in ('.', '..') or normpath != path:
       raise ValueError('Spec {spec} has un-normalized path '
                        'part {path}'.format(spec=spec, path=path))
-    if components[-1].startswith('BUILD'):
+    if components[-1].startswith('PANTS.BUILD'):
       raise ValueError('Spec {spec} has {trailing} as the last path part and BUILD is '
                        'reserved files'.format(spec=spec, trailing=components[-1]))
 

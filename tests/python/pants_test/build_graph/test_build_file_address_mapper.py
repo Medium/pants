@@ -23,7 +23,7 @@ from pants_test.base_test import BaseTest
 class BuildFileAddressMapperTest(BaseTest):
 
   def test_resolve(self):
-    build_file = self.add_to_build_file('BUILD', 'target(name="foo")')
+    build_file = self.add_to_build_file('PANTS.BUILD', 'target(name="foo")')
     address, addressable = self.address_mapper.resolve(Address.parse('//:foo'))
     self.assertIsInstance(address, BuildFileAddress)
     self.assertEqual(build_file, address.build_file)
@@ -32,7 +32,7 @@ class BuildFileAddressMapperTest(BaseTest):
     self.assertEqual(addressable.addressed_type, Target)
 
   def test_resolve_spec(self):
-    self.add_to_build_file('BUILD', dedent("""
+    self.add_to_build_file('PANTS.BUILD', dedent("""
       target(name='foozle')
       target(name='baz')
       """))
@@ -44,10 +44,10 @@ class BuildFileAddressMapperTest(BaseTest):
     self.assertEqual(dependencies_addressable.addressed_type, Target)
 
   def test_scan_addresses(self):
-    root_build_file = self.add_to_build_file('BUILD', 'target(name="foo")')
-    subdir_build_file = self.add_to_build_file('subdir/BUILD', 'target(name="bar")')
-    subdir_suffix_build_file = self.add_to_build_file('subdir/BUILD.suffix', 'target(name="baz")')
-    with open(os.path.join(self.build_root, 'BUILD.invalid.suffix'), 'w') as invalid_build_file:
+    root_build_file = self.add_to_build_file('PANTS.BUILD', 'target(name="foo")')
+    subdir_build_file = self.add_to_build_file('subdir/PANTS.BUILD', 'target(name="bar")')
+    subdir_suffix_build_file = self.add_to_build_file('subdir/PANTS.BUILD.suffix', 'target(name="baz")')
+    with open(os.path.join(self.build_root, 'PANTS.BUILD.invalid.suffix'), 'w') as invalid_build_file:
       invalid_build_file.write('target(name="foobar")')
     self.assertEquals({BuildFileAddress(root_build_file, 'foo'),
                        BuildFileAddress(subdir_build_file, 'bar'),
@@ -55,9 +55,9 @@ class BuildFileAddressMapperTest(BaseTest):
                       self.address_mapper.scan_addresses())
 
   def test_scan_addresses_with_root(self):
-    self.add_to_build_file('BUILD', 'target(name="foo")')
-    subdir_build_file = self.add_to_build_file('subdir/BUILD', 'target(name="bar")')
-    subdir_suffix_build_file = self.add_to_build_file('subdir/BUILD.suffix', 'target(name="baz")')
+    self.add_to_build_file('PANTS.BUILD', 'target(name="foo")')
+    subdir_build_file = self.add_to_build_file('subdir/PANTS.BUILD', 'target(name="bar")')
+    subdir_suffix_build_file = self.add_to_build_file('subdir/PANTS.BUILD.suffix', 'target(name="baz")')
     subdir = os.path.join(self.build_root, 'subdir')
     self.assertEquals({BuildFileAddress(subdir_build_file, 'bar'),
                        BuildFileAddress(subdir_suffix_build_file, 'baz')},
@@ -78,7 +78,7 @@ class BuildFileAddressMapperTest(BaseTest):
       self.address_mapper.spec_to_address(':')
 
   def test_raises_address_not_in_one_build_file(self):
-    self.add_to_build_file('BUILD', 'target(name="foo")')
+    self.add_to_build_file('PANTS.BUILD', 'target(name="foo")')
 
     # Create an address that doesn't exist in an existing BUILD file
     address = Address.parse(':bar')
@@ -89,16 +89,16 @@ class BuildFileAddressMapperTest(BaseTest):
       self.address_mapper.resolve(address)
 
   def test_raises_address_not_in_two_build_files(self):
-    self.add_to_build_file('BUILD.1', 'target(name="foo1")')
-    self.add_to_build_file('BUILD.2', 'target(name="foo2")')
+    self.add_to_build_file('PANTS.BUILD.1', 'target(name="foo1")')
+    self.add_to_build_file('PANTS.BUILD.2', 'target(name="foo2")')
 
     # Create an address that doesn't exist in an existing BUILD file
     address = Address.parse(':bar')
     with self.assertRaisesRegexp(BuildFileAddressMapper.AddressNotInBuildFile,
                                  '^bar was not found in BUILD files from .*. '
                                  'Perhaps you meant one of:'
-                                 '\s+:foo1 \(from BUILD.1\)'
-                                 '\s+:foo2 \(from BUILD.2\)$'):
+                                 '\s+:foo1 \(from PANTS.BUILD.1\)'
+                                 '\s+:foo2 \(from PANTS.BUILD.2\)$'):
       self.address_mapper.resolve(address)
 
   def test_raises_address_invalid_address_error(self):
@@ -106,7 +106,7 @@ class BuildFileAddressMapperTest(BaseTest):
       self.address_mapper.resolve_spec("../foo")
 
   def test_raises_empty_build_file_error(self):
-    self.add_to_build_file('BUILD', 'pass')
+    self.add_to_build_file('PANTS.BUILD', 'pass')
     with self.assertRaises(BuildFileAddressMapper.EmptyBuildFileError):
       self.address_mapper.resolve_spec('//:foo')
 
@@ -118,7 +118,7 @@ class BuildFileAddressMapperTest(BaseTest):
     self.assertIsInstance(BuildFileAddressMapper.BuildFileScanError(), AddressLookupError)
 
   def test_raises_wrong_dependencies_type(self):
-    self.add_to_build_file('BUILD', 'target(name="foo", dependencies="bar")')
+    self.add_to_build_file('PANTS.BUILD', 'target(name="foo", dependencies="bar")')
     address = Address.parse(':foo')
     with self.assertRaisesRegexp(AddressLookupError,
                                  '^Invalid target.*foo.*.'
@@ -132,13 +132,13 @@ class BuildFileAddressMapperWithIgnoreTest(BaseTest):
     return ['subdir']
 
   def test_scan_from_address_mapper(self):
-    root_build_file = self.add_to_build_file('BUILD', 'target(name="foo")')
-    self.add_to_build_file('subdir/BUILD', 'target(name="bar")')
+    root_build_file = self.add_to_build_file('PANTS.BUILD', 'target(name="foo")')
+    self.add_to_build_file('subdir/PANTS.BUILD', 'target(name="bar")')
     self.assertEquals({BuildFileAddress(root_build_file, 'foo')}, self.address_mapper.scan_addresses())
 
   def test_scan_from_context(self):
-    self.add_to_build_file('BUILD', 'target(name="foo")')
-    self.add_to_build_file('subdir/BUILD', 'target(name="bar")')
+    self.add_to_build_file('PANTS.BUILD', 'target(name="foo")')
+    self.add_to_build_file('subdir/PANTS.BUILD', 'target(name="bar")')
     graph = self.context().scan()
     self.assertEquals([target.address.spec for target in graph.targets()], ['//:foo'])
 
@@ -148,16 +148,16 @@ class BuildFileAddressMapperScanTest(BaseTest):
   NO_FAIL_FAST_RE = re.compile(r"""^--------------------
 .*
 Exception message: name 'a_is_bad' is not defined
- while executing BUILD file BuildFile\(bad/a/BUILD, FileSystemProjectTree\(.*\)\)
+ while executing BUILD file BuildFile\(bad/a/PANTS.BUILD, FileSystemProjectTree\(.*\)\)
  Loading addresses from 'bad/a' failed\.
 .*
 Exception message: name 'b_is_bad' is not defined
- while executing BUILD file BuildFile\(bad/b/BUILD, FileSystemProjectTree\(.*\)\)
+ while executing BUILD file BuildFile\(bad/b/PANTS.BUILD, FileSystemProjectTree\(.*\)\)
  Loading addresses from 'bad/b' failed\.
 Invalid BUILD files for \[::\]$""", re.DOTALL)
 
   FAIL_FAST_RE = """^name 'a_is_bad' is not defined
- while executing BUILD file BuildFile\(bad/a/BUILD\, FileSystemProjectTree\(.*\)\)
+ while executing BUILD file BuildFile\(bad/a/PANTS.BUILD\, FileSystemProjectTree\(.*\)\)
  Loading addresses from 'bad/a' failed.$"""
 
   def setUp(self):
@@ -166,7 +166,7 @@ Invalid BUILD files for \[::\]$""", re.DOTALL)
     def add_target(path, name):
       self.add_to_build_file(path, 'target(name="{name}")\n'.format(name=name))
 
-    add_target('BUILD', 'root')
+    add_target('PANTS.BUILD', 'root')
     add_target('a', 'a')
     add_target('a', 'b')
     add_target('a/b', 'b')

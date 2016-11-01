@@ -97,7 +97,7 @@ This is the second readme file! Isn't it exciting?
   def test_wiki_page_fingerprinting(self):
     def create_page_target(space):
       self.reset_build_graph()
-      self.create_file('src/docs/BUILD')
+      self.create_file('src/docs/PANTS.BUILD')
       self.add_to_build_file('src/docs', dedent("""
         page(name='readme3',
           source='README.md',

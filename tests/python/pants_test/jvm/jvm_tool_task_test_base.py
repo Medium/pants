@@ -80,7 +80,7 @@ class JvmToolTaskTestBase(JvmTaskTestBase):
 
     # Tool option defaults currently point to targets in the real BUILD.tools, so we copy it
     # into our test workspace.
-    shutil.copy(os.path.join(self.real_build_root, 'BUILD.tools'), self.build_root)
+    shutil.copy(os.path.join(self.real_build_root, 'PANTS.BUILD.tools'), self.build_root)
 
     Bootstrapper.reset_instance()
 

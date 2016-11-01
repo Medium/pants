@@ -67,7 +67,7 @@ class CheckPublishedDepsTest(ConsoleTaskTestBase):
         revision.sha.org.name%lib2=12345
         """))
 
-    self.add_to_build_file('provider/BUILD', dedent("""
+    self.add_to_build_file('provider/PANTS.BUILD', dedent("""
         java_library(name='lib1',
           provides=artifact(
             org='org.name',
@@ -81,17 +81,17 @@ class CheckPublishedDepsTest(ConsoleTaskTestBase):
             repo=repo),
           sources=[])
         """))
-    self.add_to_build_file('outdated/BUILD', dedent("""
+    self.add_to_build_file('outdated/PANTS.BUILD', dedent("""
         jar_library(name='outdated',
           jars=[jar(org='org.name', name='lib1', rev='1.0.0')]
         )
         """))
-    self.add_to_build_file('uptodate/BUILD', dedent("""
+    self.add_to_build_file('uptodate/PANTS.BUILD', dedent("""
         jar_library(name='uptodate',
           jars=[jar(org='org.name', name='lib2', rev='2.0.0')]
         )
         """))
-    self.add_to_build_file('both/BUILD', dedent("""
+    self.add_to_build_file('both/PANTS.BUILD', dedent("""
         target(name='both',
           dependencies=[
             'outdated',

@@ -58,7 +58,7 @@ class JarLibraryTest(BaseTest):
       self.assertEquals(name, dep.name)
       self.assertEquals(rev, dep.rev)
 
-    self.add_to_build_file('BUILD', dedent('''
+    self.add_to_build_file('PANTS.BUILD', dedent('''
     jar_library(name='lib1',
       jars=[
         jar(org='testOrg1', name='testName1', rev='123'),

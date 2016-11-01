@@ -164,9 +164,9 @@ class BuildConfigurationTest(unittest.TestCase):
                      aliases.context_aware_object_factories)
 
     with temporary_dir() as root:
-      build_file_path = os.path.join(root, 'george', 'BUILD')
+      build_file_path = os.path.join(root, 'george', 'PANTS.BUILD')
       touch(build_file_path)
-      build_file = BuildFile(FileSystemProjectTree(root), 'george/BUILD')
+      build_file = BuildFile(FileSystemProjectTree(root), 'george/PANTS.BUILD')
       parse_state = self.build_configuration.initialize_parse_state(build_file)
 
       self.assertEqual(0, len(parse_state.registered_addressable_instances))
@@ -177,5 +177,5 @@ class BuildConfigurationTest(unittest.TestCase):
   def _create_mock_build_file(self, dirname):
     with temporary_dir() as root:
       os.mkdir(os.path.join(root, dirname))
-      touch(os.path.join(root, dirname, 'BUILD'))
-      yield BuildFile(FileSystemProjectTree(root), os.path.join(dirname, 'BUILD'))
+      touch(os.path.join(root, dirname, 'PANTS.BUILD'))
+      yield BuildFile(FileSystemProjectTree(root), os.path.join(dirname, 'PANTS.BUILD'))

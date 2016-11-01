@@ -43,7 +43,7 @@ class IncompleteCustomScalaIntegrationTest(PantsRunIntegrationTest):
 
   def setUp(self):
     self.target_path = 'testprojects/src/scala/org/pantsbuild/testproject/custom_scala_platform'
-    self.tmp_build_file_path = 'BUILD.CustomScalaIntegTests'
+    self.tmp_build_file_path = 'PANTS.BUILD.CustomScalaIntegTests'
 
   def test_working_210(self):
     pants_run = self.pants_run(options=['--scala-platform-version=2.10'])

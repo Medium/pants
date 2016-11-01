@@ -76,7 +76,7 @@ class GoLocalSourceTestBase(AbstractClass):
     # case insensitive filesystems - which are common.
 
     # We shouldn't grab these - no BUILDs, no dirents, no subdir files.
-    self.create_file('src/go/src/foo/BUILD')
+    self.create_file('src/go/src/foo/PANTS.BUILD')
     self.create_file('src/go/src/foo/subpackage/jane.go')
     self.create_file('src/go/src/foo/subpackage/jane.c')
 
@@ -107,7 +107,7 @@ class GoLocalSourceTestBase(AbstractClass):
 
   def test_globs_resources(self):
     # We shouldn't grab these - no BUILDs, no dirents, no subdir files.
-    self.create_file('src/go/src/foo/BUILD')
+    self.create_file('src/go/src/foo/PANTS.BUILD')
     self.create_file('src/go/src/foo/subpackage/jane.go')
     self.create_file('src/go/src/foo/subpackage/jane.png')
 

@@ -91,7 +91,7 @@ class CheckstyleIntegrationTest(PantsRunIntegrationTest):
       current_root = get_buildroot()
     files_to_copy = set(files_to_copy)
     files_to_copy.update(f for f in os.listdir(current_root)
-                         if f.endswith('.ini') or f.startswith('BUILD'))
+                         if f.endswith('.ini') or f.startswith('PANTS.BUILD'))
     files_to_copy.update((
       'pants',
       '3rdparty',

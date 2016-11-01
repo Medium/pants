@@ -145,16 +145,16 @@ class FileDepsTest(ConsoleTaskTestBase):
 
   def test_resources(self):
     self.assert_console_output(
-      'src/resources/lib/BUILD',
+      'src/resources/lib/PANTS.BUILD',
       'src/resources/lib/data.json',
       targets=[self.target('src/resources/lib')]
     )
 
   def test_globs(self):
     self.assert_console_output(
-      'src/scala/core/BUILD',
+      'src/scala/core/PANTS.BUILD',
       'src/scala/core/core1.scala',
-      'src/java/core/BUILD',
+      'src/java/core/PANTS.BUILD',
       'src/java/core/core*.java',
       targets=[self.target('src/scala/core')],
       options=dict(globs=True),
@@ -163,18 +163,18 @@ class FileDepsTest(ConsoleTaskTestBase):
   def test_globs_app(self):
     self.assert_console_output(
       'project/config/app.yaml',
-      'project/BUILD',
-      'src/java/bin/BUILD',
-      'src/java/core/BUILD',
+      'project/PANTS.BUILD',
+      'src/java/bin/PANTS.BUILD',
+      'src/java/core/PANTS.BUILD',
       'src/java/bin/main.java',
       'src/java/core/core*.java',
-      'src/java/lib/BUILD',
+      'src/java/lib/PANTS.BUILD',
       'src/java/lib/lib1.java',
       'src/resources/lib/*.json',
-      'src/resources/lib/BUILD',
-      'src/scala/core/BUILD',
+      'src/resources/lib/PANTS.BUILD',
+      'src/scala/core/PANTS.BUILD',
       'src/scala/core/core1.scala',
-      'src/thrift/storage/BUILD',
+      'src/thrift/storage/PANTS.BUILD',
       'src/thrift/storage/data_types.thrift',
       targets=[self.target('project:app')],
       options=dict(globs=True),
@@ -182,9 +182,9 @@ class FileDepsTest(ConsoleTaskTestBase):
 
   def test_scala_java_cycle_scala_end(self):
     self.assert_console_output(
-      'src/scala/core/BUILD',
+      'src/scala/core/PANTS.BUILD',
       'src/scala/core/core1.scala',
-      'src/java/core/BUILD',
+      'src/java/core/PANTS.BUILD',
       'src/java/core/core1.java',
       'src/java/core/core2.java',
       targets=[self.target('src/scala/core')]
@@ -192,9 +192,9 @@ class FileDepsTest(ConsoleTaskTestBase):
 
   def test_scala_java_cycle_java_end(self):
     self.assert_console_output(
-      'src/scala/core/BUILD',
+      'src/scala/core/PANTS.BUILD',
       'src/scala/core/core1.scala',
-      'src/java/core/BUILD',
+      'src/java/core/PANTS.BUILD',
       'src/java/core/core1.java',
       'src/java/core/core2.java',
       targets=[self.target('src/java/core')]
@@ -202,15 +202,15 @@ class FileDepsTest(ConsoleTaskTestBase):
 
   def test_concrete_only(self):
     self.assert_console_output(
-      'src/java/lib/BUILD',
+      'src/java/lib/PANTS.BUILD',
       'src/java/lib/lib1.java',
-      'src/thrift/storage/BUILD',
+      'src/thrift/storage/PANTS.BUILD',
       'src/thrift/storage/data_types.thrift',
-      'src/resources/lib/BUILD',
+      'src/resources/lib/PANTS.BUILD',
       'src/resources/lib/data.json',
-      'src/scala/core/BUILD',
+      'src/scala/core/PANTS.BUILD',
       'src/scala/core/core1.scala',
-      'src/java/core/BUILD',
+      'src/java/core/PANTS.BUILD',
       'src/java/core/core1.java',
       'src/java/core/core2.java',
       targets=[self.target('src/java/lib')]
@@ -218,19 +218,19 @@ class FileDepsTest(ConsoleTaskTestBase):
 
   def test_jvm_app(self):
     self.assert_console_output(
-      'project/BUILD',
+      'project/PANTS.BUILD',
       'project/config/app.yaml',
-      'src/java/bin/BUILD',
+      'src/java/bin/PANTS.BUILD',
       'src/java/bin/main.java',
-      'src/java/lib/BUILD',
+      'src/java/lib/PANTS.BUILD',
       'src/java/lib/lib1.java',
-      'src/thrift/storage/BUILD',
+      'src/thrift/storage/PANTS.BUILD',
       'src/thrift/storage/data_types.thrift',
-      'src/resources/lib/BUILD',
+      'src/resources/lib/PANTS.BUILD',
       'src/resources/lib/data.json',
-      'src/scala/core/BUILD',
+      'src/scala/core/PANTS.BUILD',
       'src/scala/core/core1.scala',
-      'src/java/core/BUILD',
+      'src/java/core/PANTS.BUILD',
       'src/java/core/core1.java',
       'src/java/core/core2.java',
       targets=[self.target('project:app')]

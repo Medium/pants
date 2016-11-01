@@ -193,7 +193,7 @@ class BundleTest(BaseTest):
     metal_dense = self.create_file(os.path.join(spec_path, 'config/metal/dense.xml'))
     unused = self.make_target(Address(spec_path, 'unused').spec, JvmBinary)
 
-    self.add_to_build_file('src/java/org/archimedes/volume/BUILD', dedent("""
+    self.add_to_build_file('src/java/org/archimedes/volume/PANTS.BUILD', dedent("""
       jvm_app(name='volume',
         dependencies=[':unused'],
         bundles=[

@@ -20,14 +20,14 @@ class JavaAntlrLibraryTest(BaseTest):
 
   def test_empty(self):
     with self.assertRaisesRegexp(ValueError, "Missing required 'sources' parameter"):
-      self.add_to_build_file('BUILD', dedent('''
+      self.add_to_build_file('PANTS.BUILD', dedent('''
         java_antlr_library(name='foo',
           sources=[],
         )'''))
       self.foo = self.target('//:foo')
 
   def test_valid(self):
-    self.add_to_build_file('BUILD', dedent('''
+    self.add_to_build_file('PANTS.BUILD', dedent('''
       java_antlr_library(name='foo',
         sources=['foo'],
       )'''))
@@ -36,7 +36,7 @@ class JavaAntlrLibraryTest(BaseTest):
 
   def test_invalid_compiler(self):
     with self.assertRaisesRegexp(ValueError, "Illegal value for 'compiler'"):
-      self.add_to_build_file('BUILD', dedent('''
+      self.add_to_build_file('PANTS.BUILD', dedent('''
         java_antlr_library(name='foo',
           sources=['foo'],
           compiler='antlr9'

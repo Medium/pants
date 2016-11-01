@@ -46,10 +46,10 @@ class BaseTest(unittest.TestCase):
 
     :API: public
     """
-    if os.path.basename(relpath).startswith('BUILD'):
+    if os.path.basename(relpath).startswith('PANTS.BUILD'):
       return relpath
     else:
-      return os.path.join(relpath, 'BUILD')
+      return os.path.join(relpath, 'PANTS.BUILD')
 
   def create_dir(self, relpath):
     """Creates a directory under the buildroot.

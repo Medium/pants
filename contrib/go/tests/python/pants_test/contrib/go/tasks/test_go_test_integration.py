@@ -37,7 +37,7 @@ class GoTestIntegrationTest(PantsRunIntegrationTest):
             return a + b
             }
             """).strip())
-      with safe_open(os.path.join(lib_unstyle_dir, 'BUILD'), 'w') as fp:
+      with safe_open(os.path.join(lib_unstyle_dir, 'PANTS.BUILD'), 'w') as fp:
         fp.write('go_library()')
 
       args = ['compile', lib_unstyle_dir]

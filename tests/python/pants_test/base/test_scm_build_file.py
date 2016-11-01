@@ -30,26 +30,26 @@ class ScmBuildFileTest(BuildFileTestBase):
       subprocess.check_call(['git', 'commit', '-m' 'initial commit'])
 
       subprocess.check_call(['rm', '-rf', 'path-that-does-exist',
-                             'grandparent', 'BUILD', 'BUILD.twitter'])
+                             'grandparent', 'PANTS.BUILD', 'PANTS.BUILD.twitter'])
 
       self._project_tree = ScmProjectTree(self.root_dir, Git(worktree=self.root_dir), 'HEAD')
 
-      my_buildfile = self.create_buildfile('grandparent/parent/BUILD')
-      buildfile = self.create_buildfile('grandparent/parent/BUILD.twitter')
+      my_buildfile = self.create_buildfile('grandparent/parent/PANTS.BUILD')
+      buildfile = self.create_buildfile('grandparent/parent/PANTS.BUILD.twitter')
 
       self.assertEquals(OrderedSet([my_buildfile, buildfile]),
                         OrderedSet(self.get_build_files_family('grandparent/parent')))
 
-      self.assertEquals(OrderedSet([self.create_buildfile('grandparent/parent/child2/child3/BUILD')]),
+      self.assertEquals(OrderedSet([self.create_buildfile('grandparent/parent/child2/child3/PANTS.BUILD')]),
                         OrderedSet(self.get_build_files_family('grandparent/parent/child2/child3')))
 
       buildfiles = self.scan_buildfiles('grandparent')
 
       self.assertEquals(OrderedSet([
-        self.create_buildfile('grandparent/parent/BUILD'),
-        self.create_buildfile('grandparent/parent/BUILD.twitter'),
-        self.create_buildfile('grandparent/parent/child1/BUILD'),
-        self.create_buildfile('grandparent/parent/child1/BUILD.twitter'),
-        self.create_buildfile('grandparent/parent/child2/child3/BUILD'),
-        self.create_buildfile('grandparent/parent/child5/BUILD'),
+        self.create_buildfile('grandparent/parent/PANTS.BUILD'),
+        self.create_buildfile('grandparent/parent/PANTS.BUILD.twitter'),
+        self.create_buildfile('grandparent/parent/child1/PANTS.BUILD'),
+        self.create_buildfile('grandparent/parent/child1/PANTS.BUILD.twitter'),
+        self.create_buildfile('grandparent/parent/child2/child3/PANTS.BUILD'),
+        self.create_buildfile('grandparent/parent/child5/PANTS.BUILD'),
       ]), buildfiles)

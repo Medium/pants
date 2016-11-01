@@ -74,17 +74,17 @@ class PayloadTest(BaseTest):
 
   def test_no_nested_globs(self):
     # nesting no longer allowed
-    self.add_to_build_file('z/BUILD', 'java_library(name="z", sources=[globs("*")])')
+    self.add_to_build_file('z/PANTS.BUILD', 'java_library(name="z", sources=[globs("*")])')
     with self.assertRaises(ValueError):
       self.context().scan()
 
   def test_flat_globs_list(self):
     # flattened allowed
-    self.add_to_build_file('y/BUILD', 'java_library(name="y", sources=globs("*"))')
+    self.add_to_build_file('y/PANTS.BUILD', 'java_library(name="y", sources=globs("*"))')
     self.context().scan()
 
   def test_single_source(self):
-    self.add_to_build_file('y/BUILD', 'java_library(name="y", sources=["Source.scala"])')
+    self.add_to_build_file('y/PANTS.BUILD', 'java_library(name="y", sources=["Source.scala"])')
     self.context().scan()
 
   def test_missing_payload_field(self):

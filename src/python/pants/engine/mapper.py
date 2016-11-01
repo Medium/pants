@@ -169,7 +169,7 @@ class AddressMapper(object):
     """
     self.symbol_table_cls = symbol_table_cls
     self.parser_cls = parser_cls
-    self.build_pattern = build_pattern or 'BUILD*'
+    self.build_pattern = build_pattern or 'PANTS.BUILD*'
 
   def __eq__(self, other):
     if self is other:

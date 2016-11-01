@@ -45,7 +45,7 @@ Targets
 **Targets** are the "nouns" of Pants, things pants can act upon. You
 annotate your source code with `BUILD` files to define these
 targets. For example, if your `tests/com/twitter/mybird/` directory
-contains JUnit tests, you have a `tests/com/twitter/mybird/BUILD` file
+contains JUnit tests, you have a `tests/com/twitter/mybird/PANTS.BUILD` file
 with a `junit_tests` target definition. As you change your source code,
 you'll occasionally change the set of Targets by editing `BUILD` files.
 E.g., if you refactor some code, moving part of it to a new directory,
@@ -100,7 +100,7 @@ Addresses
 graph.  The address has two parts:  the directory to the BUILD file
 and the name of the target within that BUILD file.
 
-For example, if you have a `tests/com/twitter/mybird/BUILD` file
+For example, if you have a `tests/com/twitter/mybird/PANTS.BUILD` file
 with a `junit_tests(name='test-flight)` target definition, you would
 write the address as:
 

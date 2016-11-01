@@ -74,18 +74,18 @@ class ParseSpecTest(unittest.TestCase):
     self.do_test_bad_spec('a::')
 
   def test_parse_bad_spec_build_trailing_path_component(self):
-    self.do_test_bad_spec('BUILD')
-    self.do_test_bad_spec('BUILD.suffix')
-    self.do_test_bad_spec('//BUILD')
-    self.do_test_bad_spec('//BUILD.suffix')
-    self.do_test_bad_spec('a/BUILD')
-    self.do_test_bad_spec('a/BUILD.suffix')
-    self.do_test_bad_spec('//a/BUILD')
-    self.do_test_bad_spec('//a/BUILD.suffix')
-    self.do_test_bad_spec('a/BUILD:b')
-    self.do_test_bad_spec('a/BUILD.suffix:b')
-    self.do_test_bad_spec('//a/BUILD:b')
-    self.do_test_bad_spec('//a/BUILD.suffix:b')
+    self.do_test_bad_spec('PANTS.BUILD')
+    self.do_test_bad_spec('PANTS.BUILD.suffix')
+    self.do_test_bad_spec('//PANTS.BUILD')
+    self.do_test_bad_spec('//PANTS.BUILD.suffix')
+    self.do_test_bad_spec('a/PANTS.BUILD')
+    self.do_test_bad_spec('a/PANTS.BUILD.suffix')
+    self.do_test_bad_spec('//a/PANTS.BUILD')
+    self.do_test_bad_spec('//a/PANTS.BUILD.suffix')
+    self.do_test_bad_spec('a/PANTS.BUILD:b')
+    self.do_test_bad_spec('a/PANTS.BUILD.suffix:b')
+    self.do_test_bad_spec('//a/PANTS.BUILD:b')
+    self.do_test_bad_spec('//a/PANTS.BUILD.suffix:b')
 
   def do_test_bad_spec(self, spec):
     with self.assertRaises(ValueError):
@@ -128,13 +128,13 @@ class AddressTest(BaseAddressTest):
 
 class BuildFileAddressTest(BaseAddressTest):
   def test_build_file_forms(self):
-    with self.workspace('a/b/c/BUILD') as root_dir:
-      build_file = BuildFile(FileSystemProjectTree(root_dir), relpath='a/b/c/BUILD')
+    with self.workspace('a/b/c/PANTS.BUILD') as root_dir:
+      build_file = BuildFile(FileSystemProjectTree(root_dir), relpath='a/b/c/PANTS.BUILD')
       self.assert_address('a/b/c', 'c', BuildFileAddress(build_file))
       self.assert_address('a/b/c', 'foo', BuildFileAddress(build_file, target_name='foo'))
       self.assertEqual('a/b/c:foo', BuildFileAddress(build_file, target_name='foo').spec)
 
-    with self.workspace('BUILD') as root_dir:
-      build_file = BuildFile(FileSystemProjectTree(root_dir), relpath='BUILD')
+    with self.workspace('PANTS.BUILD') as root_dir:
+      build_file = BuildFile(FileSystemProjectTree(root_dir), relpath='PANTS.BUILD')
       self.assert_address('', 'foo', BuildFileAddress(build_file, target_name='foo'))
       self.assertEqual('//:foo', BuildFileAddress(build_file, target_name='foo').spec)

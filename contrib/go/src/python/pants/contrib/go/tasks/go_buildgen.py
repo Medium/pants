@@ -393,7 +393,7 @@ class GoBuildgen(GoTask):
 
       """).format(goal_name=goal_name, flags=flags)
     template_text = template_header + self.get_options().template
-    build_file_basename = 'BUILD' + self.get_options().extension
+    build_file_basename = 'PANTS.BUILD' + self.get_options().extension
 
     targets_by_spec_path = defaultdict(set)
     for target in targets:

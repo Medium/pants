@@ -151,8 +151,8 @@ class IncludeExcerptPattern(markdown.inlinepatterns.Pattern):
     try:
       lexer = guess_lexer_for_filename(include_path, file_text)
     except ClassNotFound:
-      # e.g., ClassNotFound: no lexer for filename u'BUILD' found
-      if 'BUILD' in include_path:
+      # e.g., ClassNotFound: no lexer for filename u'PANTS.BUILD' found
+      if 'PANTS.BUILD' in include_path:
         lexer = PythonLexer()
       else:
         lexer = TextLexer()  # the boring plain-text lexer

@@ -191,10 +191,10 @@ class ListTargetsTest(BaseListTargetsTest):
     )
 
   def test_no_synthetic_resources_in_output(self):
-    self.add_to_build_file('BUILD', dedent("""
+    self.add_to_build_file('PANTS.BUILD', dedent("""
     python_library(
       name = 'lib',
-      resources = ['BUILD'],
+      resources = ['PANTS.BUILD'],
     )
     """))
     output = self.execute_console_task()

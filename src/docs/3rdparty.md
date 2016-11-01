@@ -7,7 +7,7 @@ Maven-style coordinates, and `python_requirements` targets point to external
 Python packages using PyPI names and versions.
 
 It's idiomatic to define these external dependencies in BUILD files under a `3rdparty/`
-directory. E.g., `3rdparty/jvm/BUILD`, `3rdparty/python/BUILD`.
+directory. E.g., `3rdparty/jvm/PANTS.BUILD`, `3rdparty/python/PANTS.BUILD`.
 
 Keeping all these definitions in one place makes it easier to avoid transitive
 dependency conflicts in your codebase.

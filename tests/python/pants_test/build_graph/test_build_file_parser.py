@@ -38,18 +38,18 @@ class BuildFileParserBasicsTest(BaseTest):
     return BuildFile(FileSystemProjectTree(self.build_root), path)
 
   def test_addressable_exceptions(self):
-    self.add_to_build_file('a/BUILD', 'target()')
-    build_file_a = self.create_buildfile('a/BUILD')
+    self.add_to_build_file('a/PANTS.BUILD', 'target()')
+    build_file_a = self.create_buildfile('a/PANTS.BUILD')
 
     with self.assertRaises(BuildFileParser.ExecuteError):
       self.build_file_parser.parse_build_file(build_file_a)
 
-    self.add_to_build_file('b/BUILD', 'target(name="foo", "bad_arg")')
-    build_file_b = self.create_buildfile('b/BUILD')
+    self.add_to_build_file('b/PANTS.BUILD', 'target(name="foo", "bad_arg")')
+    build_file_b = self.create_buildfile('b/PANTS.BUILD')
     with self.assertRaises(BuildFileParser.BuildFileParserError):
       self.build_file_parser.parse_build_file(build_file_b)
 
-    self.add_to_build_file('d/BUILD', dedent(
+    self.add_to_build_file('d/PANTS.BUILD', dedent(
       """
       target(
         name="foo",
@@ -59,19 +59,19 @@ class BuildFileParserBasicsTest(BaseTest):
       )
       """
     ))
-    build_file_d = self.create_buildfile('d/BUILD')
+    build_file_d = self.create_buildfile('d/PANTS.BUILD')
     with self.assertRaises(BuildFileParser.BuildFileParserError):
       self.build_file_parser.parse_build_file(build_file_d)
 
   def test_noop_parse(self):
-    self.add_to_build_file('BUILD', '')
-    build_file = self.create_buildfile('BUILD')
+    self.add_to_build_file('PANTS.BUILD', '')
+    build_file = self.create_buildfile('PANTS.BUILD')
     address_map = set(self.build_file_parser.parse_build_file(build_file))
     self.assertEqual(len(address_map), 0)
 
   def test_invalid_unicode_in_build_file(self):
     """Demonstrate that unicode characters causing parse errors raise real parse errors."""
-    self.add_to_build_file('BUILD', ensure_binary(dedent(
+    self.add_to_build_file('PANTS.BUILD', ensure_binary(dedent(
       """
       jvm_binary(name = ‘hello’,  # Parse error due to smart quotes (non ascii characters)
         source = 'HelloWorld.java'
@@ -79,13 +79,13 @@ class BuildFileParserBasicsTest(BaseTest):
       )
       """
     )))
-    build_file = self.create_buildfile('BUILD')
+    build_file = self.create_buildfile('PANTS.BUILD')
     with self.assertRaises(BuildFileParser.BuildFileParserError):
       self.build_file_parser.parse_build_file(build_file)
 
   def test_unicode_string_in_build_file(self):
     """Demonstrates that a string containing unicode should work in a BUILD file."""
-    self.add_to_build_file('BUILD', ensure_binary(dedent(
+    self.add_to_build_file('PANTS.BUILD', ensure_binary(dedent(
         """
         java_library(
           name='foo',
@@ -93,7 +93,7 @@ class BuildFileParserBasicsTest(BaseTest):
         )
         """
     )))
-    build_file = self.create_buildfile('BUILD')
+    build_file = self.create_buildfile('PANTS.BUILD')
     self.build_file_parser.parse_build_file(build_file)
 
 
@@ -106,8 +106,8 @@ class BuildFileParserTargetTest(BaseTest):
     return BuildFile(FileSystemProjectTree(self.build_root), path)
 
   def test_trivial_target(self):
-    self.add_to_build_file('BUILD', 'fake(name="foozle")')
-    build_file = self.create_buildfile('BUILD')
+    self.add_to_build_file('PANTS.BUILD', 'fake(name="foozle")')
+    build_file = self.create_buildfile('PANTS.BUILD')
     address_map = self.build_file_parser.parse_build_file(build_file)
 
     self.assertEqual(len(address_map), 1)
@@ -117,7 +117,7 @@ class BuildFileParserTargetTest(BaseTest):
     self.assertEqual(proxy.addressed_type, ErrorTarget)
 
   def test_sibling_build_files(self):
-    self.add_to_build_file('BUILD', dedent(
+    self.add_to_build_file('PANTS.BUILD', dedent(
       """
       fake(name="base",
            dependencies=[
@@ -125,7 +125,7 @@ class BuildFileParserTargetTest(BaseTest):
            ])
       """))
 
-    self.add_to_build_file('BUILD.foo', dedent(
+    self.add_to_build_file('PANTS.BUILD.foo', dedent(
       """
       fake(name="foo",
            dependencies=[
@@ -133,14 +133,14 @@ class BuildFileParserTargetTest(BaseTest):
            ])
       """))
 
-    self.add_to_build_file('./BUILD.bar', dedent(
+    self.add_to_build_file('./PANTS.BUILD.bar', dedent(
       """
       fake(name="bat")
       """))
 
-    bar_build_file = self.create_buildfile('BUILD.bar')
-    base_build_file = self.create_buildfile('BUILD')
-    foo_build_file = self.create_buildfile('BUILD.foo')
+    bar_build_file = self.create_buildfile('PANTS.BUILD.bar')
+    base_build_file = self.create_buildfile('PANTS.BUILD')
+    foo_build_file = self.create_buildfile('PANTS.BUILD.foo')
 
     address_map = self.build_file_parser.address_map_from_build_files(
       BuildFile.get_build_files_family(FileSystemProjectTree(self.build_root), "."))
@@ -152,16 +152,16 @@ class BuildFileParserTargetTest(BaseTest):
 
   def test_build_file_duplicates(self):
     # This workspace has two targets in the same file with the same name.
-    self.add_to_build_file('BUILD', 'fake(name="foo")\n')
-    self.add_to_build_file('BUILD', 'fake(name="foo")\n')
+    self.add_to_build_file('PANTS.BUILD', 'fake(name="foo")\n')
+    self.add_to_build_file('PANTS.BUILD', 'fake(name="foo")\n')
 
     with self.assertRaises(BuildFileParser.AddressableConflictException):
-      base_build_file = self.create_buildfile('BUILD')
+      base_build_file = self.create_buildfile('PANTS.BUILD')
       self.build_file_parser.parse_build_file(base_build_file)
 
   def test_sibling_build_files_duplicates(self):
     # This workspace is malformed, you can't shadow a name in a sibling BUILD file
-    self.add_to_build_file('BUILD', dedent(
+    self.add_to_build_file('PANTS.BUILD', dedent(
       """
       fake(name="base",
            dependencies=[
@@ -169,7 +169,7 @@ class BuildFileParserTargetTest(BaseTest):
            ])
       """))
 
-    self.add_to_build_file('BUILD.foo', dedent(
+    self.add_to_build_file('PANTS.BUILD.foo', dedent(
       """
       fake(name="foo",
            dependencies=[
@@ -177,7 +177,7 @@ class BuildFileParserTargetTest(BaseTest):
            ])
       """))
 
-    self.add_to_build_file('./BUILD.bar', dedent(
+    self.add_to_build_file('./PANTS.BUILD.bar', dedent(
       """
       fake(name="base")
       """))
@@ -194,8 +194,8 @@ class BuildFileParserExposedObjectTest(BaseTest):
     return BuildFileAliases(objects={'fake_object': object()})
 
   def test_exposed_object(self):
-    self.add_to_build_file('BUILD', """fake_object""")
-    build_file = BuildFile(FileSystemProjectTree(self.build_root), 'BUILD')
+    self.add_to_build_file('PANTS.BUILD', """fake_object""")
+    build_file = BuildFile(FileSystemProjectTree(self.build_root), 'PANTS.BUILD')
     address_map = self.build_file_parser.parse_build_file(build_file)
     self.assertEqual(len(address_map), 0)
 
@@ -296,9 +296,9 @@ class BuildFileParserExposedContextAwareObjectFactoryTest(BaseTest):
                  make_lib("com.foo.test", "does_not_exists", "1.0")
                  path_util("baz")
                """)
-    self.create_file('3rdparty/BUILD', contents)
+    self.create_file('3rdparty/PANTS.BUILD', contents)
 
-    build_file = BuildFile(FileSystemProjectTree(self.build_root), '3rdparty/BUILD')
+    build_file = BuildFile(FileSystemProjectTree(self.build_root), '3rdparty/PANTS.BUILD')
     address_map = self.build_file_parser.parse_build_file(build_file)
     registered_proxies = set(address_map.values())
 
@@ -318,15 +318,15 @@ class BuildFileParserExposedContextAwareObjectFactoryTest(BaseTest):
     self.assertEqual({'3rdparty/baz'}, self._paths)
 
   def test_raises_parse_error(self):
-    self.add_to_build_file('BUILD', 'foo(name = = "baz")')
-    build_file = BuildFile(FileSystemProjectTree(self.build_root), 'BUILD')
+    self.add_to_build_file('PANTS.BUILD', 'foo(name = = "baz")')
+    build_file = BuildFile(FileSystemProjectTree(self.build_root), 'PANTS.BUILD')
     with self.assertRaises(BuildFileParser.ParseError):
       self.build_file_parser.parse_build_file(build_file)
 
     # Test some corner cases for the context printing
 
     # Error at beginning of BUILD file
-    build_file = self.add_to_build_file('begin/BUILD', dedent("""
+    build_file = self.add_to_build_file('begin/PANTS.BUILD', dedent("""
       *?&INVALID! = 'foo'
       target(
         name='bar',
@@ -339,7 +339,7 @@ class BuildFileParserExposedContextAwareObjectFactoryTest(BaseTest):
       self.build_file_parser.parse_build_file(build_file)
 
     # Error at end of BUILD file
-    build_file = self.add_to_build_file('end/BUILD', dedent("""
+    build_file = self.add_to_build_file('end/PANTS.BUILD', dedent("""
       target(
         name='bar',
         dependencies= [
@@ -352,7 +352,7 @@ class BuildFileParserExposedContextAwareObjectFactoryTest(BaseTest):
       self.build_file_parser.parse_build_file(build_file)
 
     # Error in the middle of BUILD file > 6 lines
-    build_file = self.add_to_build_file('middle/BUILD', dedent("""
+    build_file = self.add_to_build_file('middle/PANTS.BUILD', dedent("""
       target(
         name='bar',
 
@@ -367,15 +367,15 @@ class BuildFileParserExposedContextAwareObjectFactoryTest(BaseTest):
       self.build_file_parser.parse_build_file(build_file)
 
     # Error in very short build file.
-    build_file = self.add_to_build_file('short/BUILD', dedent("""
+    build_file = self.add_to_build_file('short/PANTS.BUILD', dedent("""
       target(name='bar', dependencies = [':baz'],) *?&INVALID! = 'foo'
       """))
     with self.assertRaises(BuildFileParser.ParseError):
       self.build_file_parser.parse_build_file(build_file)
 
   def test_raises_execute_error(self):
-    self.add_to_build_file('BUILD', 'undefined_alias(name="baz")')
-    build_file = BuildFile(FileSystemProjectTree(self.build_root), 'BUILD')
+    self.add_to_build_file('PANTS.BUILD', 'undefined_alias(name="baz")')
+    build_file = BuildFile(FileSystemProjectTree(self.build_root), 'PANTS.BUILD')
     with self.assertRaises(BuildFileParser.ExecuteError):
       self.build_file_parser.parse_build_file(build_file)
 

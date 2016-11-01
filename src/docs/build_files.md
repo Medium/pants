@@ -67,7 +67,7 @@ The address has two important roles:
 List of targets that this target depends upon. If this target's code imports
 or otherwise depends on code in other targets, list those targets here.
 
-+ To reference a target `target` defined in `path/to/BUILD` use `path/to:target`.
++ To reference a target `target` defined in `path/to/PANTS.BUILD` use `path/to:target`.
 + If the target has the same name as the BUILD file's directory, you can omit the repetition:
   <br>`path/to/target` instead of `path/to/target:target`.
 + If the target is defined in the same BUILD file, you can omit the path:
@@ -129,7 +129,7 @@ Use the  recursive wildcard `::` with the list goal:
       File "pants/commands/goal_runner.py", line 144, in setup_parser
       File "pants/base/build_graph.py", line 351, in inject_address_closure
     TransitiveLookupError: great was not found in BUILD file examples/src/java/org/pantsbuild/example/h
-    ello/greet/BUILD. Perhaps you meant:
+    ello/greet/PANTS.BUILD. Perhaps you meant:
       :greet
       referenced from examples/src/scala/org/pantsbuild/example/hello/welcome:welcome
 
@@ -151,12 +151,12 @@ Use the  recursive wildcard `::` with the list goal:
 
     :::bash
     $ ./pants filedeps examples/src/java/org/pantsbuild/example/hello/main
-    ~archie/workspace/pants/examples/src/java/org/pantsbuild/example/hello/greet/BUILD
+    ~archie/workspace/pants/examples/src/java/org/pantsbuild/example/hello/greet/PANTS.BUILD
     ~archie/workspace/pants/examples/src/java/org/pantsbuild/example/hello/main/config/greetee.txt
-    ~archie/workspace/pants/examples/src/resources/org/pantsbuild/example/hello/BUILD
+    ~archie/workspace/pants/examples/src/resources/org/pantsbuild/example/hello/PANTS.BUILD
     ~archie/workspace/pants/examples/src/java/org/pantsbuild/example/hello/main/HelloMain.java
     ~archie/workspace/pants/examples/src/resources/org/pantsbuild/example/hello/world.txt
-    ~archie/workspace/pants/examples/src/java/org/pantsbuild/example/hello/main/BUILD
+    ~archie/workspace/pants/examples/src/java/org/pantsbuild/example/hello/main/PANTS.BUILD
     ~archie/workspace/pants/examples/src/java/org/pantsbuild/example/hello/greet/Greeting.java
 
 Use the `-h` flag to get help on these commands and their various options.

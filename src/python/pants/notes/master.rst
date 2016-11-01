@@ -5236,7 +5236,7 @@ Small improvements, Refactoring and Tooling
   `RB #2142 <https://rbcommons.com/s/twitter/r/2142>`_
   `RB #2141 <https://rbcommons.com/s/twitter/r/2141>`_
 
-* Make the version of specs in BUILD.tools match the one in 3rdparty/BUILD.
+* Make the version of specs in BUILD.tools match the one in 3rdparty/PANTS.BUILD.
   `RB #2203 <https://rbcommons.com/s/twitter/r/2203>`_
 
 * Handle warnings in BUILD file context.
@@ -6207,7 +6207,7 @@ Bugfixes
   `Issue #997 <https://github.com/pantsbuild/pants/issues/997>`_
   `RB #1679 <https://rbcommons.com/s/twitter/r/1679>`_
 
-* Remove with_sources() from 3rdparty/BUILD
+* Remove with_sources() from 3rdparty/PANTS.BUILD
   `RB #1674 <https://rbcommons.com/s/twitter/r/1674>`_
 
 * Handle thrift inclusion for python in apache_thrift_gen
@@ -7266,7 +7266,7 @@ Bugfixes
 * Better validation for AndroidTarget manifest field
   `RB #860 <https://rbcommons.com/s/twitter/r/860>`_
 
-* Remove more references to /BUILD:target notation in docs
+* Remove more references to /PANTS.BUILD:target notation in docs
   `RB #855 <https://rbcommons.com/s/twitter/r/855>`_
   `RB #853 <https://rbcommons.com/s/twitter/r/853>`_
 

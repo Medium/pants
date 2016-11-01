@@ -42,7 +42,7 @@ class AntlrGenTest(NailgunTaskTestBase):
 
   PACKAGE_RE = re.compile(r'^\s*package\s+(?P<package_name>[^\s]+)\s*;\s*$')
 
-  BUILDFILE = '{srcroot}/{dir}/BUILD'.format(**PARTS)
+  BUILDFILE = '{srcroot}/{dir}/PANTS.BUILD'.format(**PARTS)
 
   def setUp(self):
     super(AntlrGenTest, self).setUp()
